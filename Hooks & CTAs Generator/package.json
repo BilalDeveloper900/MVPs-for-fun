@@ -6,9 +6,12 @@
   "scripts": {
     "dev": "pnpm --parallel --recursive dev",
     "build": "pnpm --recursive build",
+    "build:prod": "pnpm --recursive build:prod",
+    "deploy:build": "pnpm run build:prod",
     "lint": "pnpm --recursive lint",
     "test": "pnpm --recursive test",
-    "clean": "pnpm --recursive clean"
+    "clean": "pnpm --recursive clean",
+    "start:prod": "cd packages/api && npm run start:prod"
   },
   "devDependencies": {
     "@types/node": "^20.0.0",

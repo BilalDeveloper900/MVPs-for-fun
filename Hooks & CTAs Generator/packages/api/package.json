@@ -8,8 +8,11 @@
     "dev": "tsx watch src/index.ts",
     "build": "tsc",
     "start": "node dist/index.js",
+    "start:prod": "NODE_ENV=production node dist/index.js",
     "lint": "eslint src/**/*.ts",
-    "clean": "rm -rf dist"
+    "clean": "if exist dist rmdir /s /q dist",
+    "build:prod": "npm run clean && npm run build",
+    "deploy:build": "npm run build:prod && npm run start:prod"
   },
   "dependencies": {
     "cors": "^2.8.5",

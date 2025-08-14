@@ -5,9 +5,11 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "build:static": "next build",
     "start": "next start",
     "lint": "next lint",
-    "clean": "rm -rf .next out"
+    "clean": "if exist .next rmdir /s /q .next && if exist out rmdir /s /q out && if exist build rmdir /s /q build",
+    "build:prod": "npm run clean && next build"
   },
   "dependencies": {
     "next": "^14.0.0",

@@ -79,14 +79,8 @@ app.get('/api/mvps', (req, res) => {
 // Content generation routes
 app.use('/api', contentRoutes);
 
-// Serve static files from the React app build
-let frontendBuildPath: string;
-if (isProduction) {
-  // Serve static files from the frontend build
-  frontendBuildPath = path.join(__dirname, '../../web/build');
-  app.use(express.static(frontendBuildPath));
-  
-  // Handle React routing, return all requests to React app
+// For development, redirect frontend requests to Next.js dev server
+if (!isProduction) {
   app.get('*', (req, res) => {
     // Skip API routes
     if (req.path.startsWith('/api/') || req.path === '/health') {
@@ -96,7 +90,8 @@ if (isProduction) {
       });
     }
     
-    res.sendFile(path.join(frontendBuildPath, 'index.html'));
+    // Redirect to Next.js dev server
+    res.redirect(`http://localhost:3000${req.path}`);
   });
 }
 
@@ -127,7 +122,7 @@ app.listen(PORT, () => {
   console.log(`📍 Environment: ${process.env.NODE_ENV || 'development'}`);
   
   if (isProduction) {
-    console.log(`📍 Frontend served from: ${frontendBuildPath}`);
+    console.log(`📍 Frontend served from production build`);
   }
   
   // Check if OpenAI is configured
